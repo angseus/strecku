@@ -4,6 +4,7 @@ use Phalcon\Loader;
 use Phalcon\Mvc\Micro;
 use Phalcon\DI\FactoryDefault;
 use Phalcon\Db\Adapter\Pdo\Mysql as PdoMysql;
+use Phalcon\Http\Response;
 
 // Use Loader() to autoload our model
 $loader = new Loader();
@@ -76,9 +77,37 @@ $app->get('/v1/users/search/{name}', function ($name) use ($app) {
     echo json_encode($data);
 });
 
-// Retrieves users based on primary key
-$app->get('/v1/users/{id:[0-9]+}', function ($id) {
+// Retrieves user based on primary key
+$app->get('/v1/users/{id:[0-9]+}', function ($id) use ($app) {
 
+    $phql = "SELECT * FROM Users WHERE id = :id:";
+    $user = $app->modelsManager->executeQuery($phql, array(
+        'id' => $id
+    ))->getFirst();
+
+    // Create a response
+    $response = new Response();
+
+    if ($user == false) {
+        $response->setJsonContent(
+            array(
+                'status' => 'NOT-FOUND'
+            )
+        );
+    } else {
+        $response->setJsonContent(
+            array(
+                'status' => 'FOUND',
+                'data'   => array(
+                    'id'   => $user->id,
+                    'firstname' => $user->firstname,
+                    'lastname' => $user->lastname
+                )
+            )
+        );
+    }
+
+    return $response;
 });
 
 // Adds a new user
