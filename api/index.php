@@ -139,8 +139,59 @@ $app->get('/v1/users/{id:[0-9]+}', function ($id) use ($app) {
 });
 
 // Adds a new user
-$app->post('/v1/users', function () {
+$app->post('/v1/users', function () use ($app) {
 
+    $user = $app->request->getJsonRawBody();
+
+    $phql = "INSERT INTO Users (group_id, firstname, lastname, position, year, email) VALUES (:group_id:, :firstname:, :lastname:, :position:, :year:, :email:)";
+
+    $status = $app->modelsManager->executeQuery($phql, array(
+        'group_id' => $user->group_id,
+        'firstname' => $user->firstname,
+        'lastname' => $user->lastname,
+        'position' => $user->position,
+        'year' => $user->year,
+        'email' => $user->email
+    ));
+
+    // Create a response
+    $response = new Response();
+
+    // Check if the insertion was successful
+    if ($status->success() == true) {
+
+        // Change the HTTP status
+        $response->setStatusCode(201, "Created");
+
+        $user->id = $status->getModel()->id;
+
+        $response->setJsonContent(
+            array(
+                'status' => 'OK',
+                'data'   => $user
+            )
+        );
+
+    } else {
+
+        // Change the HTTP status
+        $response->setStatusCode(409, "Conflict");
+
+        // Send errors to the client
+        $errors = array();
+        foreach ($status->getMessages() as $message) {
+            $errors[] = $message->getMessage();
+        }
+
+        $response->setJsonContent(
+            array(
+                'status'   => 'ERROR',
+                'messages' => $errors
+            )
+        );
+    }
+
+    return $response;
 });
 
 // Updates user based on primary key
