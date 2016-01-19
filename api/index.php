@@ -195,8 +195,50 @@ $app->post('/v1/users', function () use ($app) {
 });
 
 // Updates user based on primary key
-$app->put('/v1/users/{id:[0-9]+}', function () {
+$app->put('/v1/users/{id:[0-9]+}', function ($id) use ($app) {
 
+    $user = $app->request->getJsonRawBody();
+
+    $phql = "UPDATE Users SET group_id = :group_id:, firstname = :firstname:, lastname = :lastname:, position = :position:, year = :year:, email = :email: WHERE id = :id:";
+    $status = $app->modelsManager->executeQuery($phql, array(
+        'id' => $id,
+        'group_id' => $user->group_id,
+        'firstname' => $user->firstname,
+        'lastname' => $user->lastname,
+        'position' => $user->position,
+        'year' => $user->year,
+        'email' => $user->email
+    ));
+
+    // Create a response
+    $response = new Response();
+
+    // Check if the insertion was successful
+    if ($status->success() == true) {
+        $response->setJsonContent(
+            array(
+                'status' => 'OK'
+            )
+        );
+    } else {
+
+        // Change the HTTP status
+        $response->setStatusCode(409, "Conflict");
+
+        $errors = array();
+        foreach ($status->getMessages() as $message) {
+            $errors[] = $message->getMessage();
+        }
+
+        $response->setJsonContent(
+            array(
+                'status'   => 'ERROR',
+                'messages' => $errors
+            )
+        );
+    }
+
+    return $response;
 });
 
 // Deletes user based on primary key
