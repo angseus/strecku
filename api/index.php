@@ -55,7 +55,7 @@ $app->get('/v1/users', function () use ($app) {
 });
 
 // Searches for users with $name in their name
-$app->get('/v1/users/search/{name}', function ($name) use ($app) {
+$app->get('/v1/users/name/{name}', function ($name) use ($app) {
 
     $phql = "SELECT * FROM Users WHERE firstname LIKE :name: OR lastname LIKE :name: ORDER BY firstname";
     $users = $app->modelsManager->executeQuery(
@@ -71,6 +71,30 @@ $app->get('/v1/users/search/{name}', function ($name) use ($app) {
             'id'   => $user->id,
             'firstname' => $user->firstname,
             'lastname' => $user->lastname
+        );
+    }
+
+    echo json_encode($data);
+});
+
+// Searches for users with $post
+$app->get('/v1/users/post/{post}', function ($post) use ($app) {
+
+    $phql = "SELECT * FROM Users WHERE position = :post: ORDER BY year";
+    $users = $app->modelsManager->executeQuery(
+        $phql,
+        array(
+            'post' => $post
+        )
+    );
+
+    $data = array();
+    foreach ($users as $user) {
+        $data[] = array(
+            'id' => $user->id,
+            'firstname' => $user->firstname,
+            'lastname' => $user->lastname,
+            'year' => $user->year
         );
     }
 
