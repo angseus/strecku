@@ -54,8 +54,26 @@ $app->get('/v1/users', function () use ($app) {
 });
 
 // Searches for users with $name in their name
-$app->get('/v1/users/search/{name}', function ($name) {
+$app->get('/v1/users/search/{name}', function ($name) use ($app) {
 
+    $phql = "SELECT * FROM Users WHERE firstname LIKE :name: OR lastname LIKE :name: ORDER BY firstname";
+    $users = $app->modelsManager->executeQuery(
+        $phql,
+        array(
+            'name' => '%' . $name . '%'
+        )
+    );
+
+    $data = array();
+    foreach ($users as $user) {
+        $data[] = array(
+            'id'   => $user->id,
+            'firstname' => $user->firstname,
+            'lastname' => $user->lastname
+        );
+    }
+
+    echo json_encode($data);
 });
 
 // Retrieves users based on primary key
