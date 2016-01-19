@@ -32,6 +32,10 @@ $di->set('db', function () {
 // Create and bind the DI to the application
 $app = new Micro($di);
 
+//////////////////////////////
+// ACTUAL ROUTES STARTS HERE /
+//////////////////////////////
+
 // Retrieves all robots
 $app->get('/v1/users', function () use ($app) {
 
