@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  if (!user)
+    link(rel='stylesheet', href='/css/login.css')
+    include login.html
+  if (user)
+    p You are currently logged in as #{user.username}
+    a(href="/logout") Logout
