@@ -305,27 +305,27 @@ body {
     color: white;
 }
 
-.navbar-default .nav > li.active>a#dashboard,
-.navbar-default .nav>li.active>a#dashboard:focus,
-#dashboard:hover {
+.navbar-default .nav > li.active>a#dashboard-anchor,
+.navbar-default .nav>li.active>a#dashboard-anchor:focus,
+#dashboard-anchor:hover {
     color: #00A8FF !important;
 }
 
-.navbar-default .nav > li.active>a#admin,
-.navbar-default .nav>li.active>a#admin:focus,
-#admin:hover {
+.navbar-default .nav > li.active>a#admin-anchor,
+.navbar-default .nav>li.active>a#admin-anchor:focus,
+#admin-anchor:hover {
     color: #D5767E !important;
 }
 
-.navbar-default .nav > li.active>a#user,
-.navbar-default .nav>li.active>a#user:focus,
-#user:hover {
+.navbar-default .nav > li.active>a#user-anchor,
+.navbar-default .nav>li.active>a#user-anchor:focus,
+#user-anchor:hover {
     color: #8F76AA !important;
 }
 
-.navbar-default .nav > li.active>a#logout,
-.navbar-default .nav>li.active>a#logout:focus,
-#logout:hover {
+.navbar-default .nav > li.active>a#logout-anchor,
+.navbar-default .nav>li.active>a#logout-anchor:focus,
+#logout-anchor:hover {
     color: #4AB08C !important;
 }
 
