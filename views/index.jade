@@ -5,5 +5,20 @@ block content
     link(rel='stylesheet', href='/css/login.css')
     include login.html
   if (user)
-    p You are currently logged in as #{user.username}
-    a(href="/logout") Logout
+    nav#mainNav.navbar.navbar-default.navbar-fixed-top
+      .container-fluid
+        a.navbar-brand.page-scroll(href='/') StreckU
+        // Collapse it right away, pew!
+        #bs-example-navbar-collapse-1.collapse.navbar-collapse
+          ul.nav.navbar-nav.navbar-left
+            li
+              a#dashboard(href='/') Dashboard
+            li
+              a#admin(href="/admin") Admin
+          ul.nav.navbar-nav.navbar-right
+            li
+              a#user(href='') Logged in as #{user.username}
+            li
+              a#logout(href="/logout") Logout
+    include index.html
+    include footer.html
