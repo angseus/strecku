@@ -1,0 +1,15 @@
+nav#mainNav.navbar.navbar-default.navbar-fixed-top
+  .container-fluid
+    a.navbar-brand.page-scroll(href='/') StreckU
+    // Collapse it right away, pew!
+    #bs-example-navbar-collapse-1.collapse.navbar-collapse
+      ul.nav.navbar-nav.navbar-left
+        li
+          a#dashboard-anchor(href='/') Dashboard
+        li
+          a#admin-anchor(href="/admin") Admin
+      ul.nav.navbar-nav.navbar-right
+        li
+          a#user-anchor(href='') Logged in as #{user.username}
+        li
+          a#logout-anchor(href="/logout") Logout
