@@ -31,8 +31,6 @@ router.post('/register', isLoggedIn, function(req, res) {
     });
 });
 
-
-
 // login / logout actions - NOT PASSWORD PROTECTED
 router.get('/login', function(req, res) {
     res.redirect('/');
