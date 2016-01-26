@@ -10,8 +10,9 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
 // set up routes
-var routes = require('./routes/main');
+var main = require('./routes/main');
 var api = require('./routes/api')
+var users = require('./routes/user')
 
 var app = express();
 
@@ -34,12 +35,11 @@ app.use(require('express-session')({
 app.use(passport.initialize());
 app.use(passport.session());
 
-
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-app.use('/', routes);
+app.use('/', main);
 app.use('/api', api);
+app.use('/user', users);
 
 // passport config
 var Account = require('./models/account');
@@ -80,6 +80,5 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-
 
 module.exports = app;
