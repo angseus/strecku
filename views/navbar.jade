@@ -10,6 +10,6 @@ nav#mainNav.navbar.navbar-default.navbar-fixed-top
           a#admin-anchor(href="/admin") Admin
       ul.nav.navbar-nav.navbar-right
         li
-          a#user-anchor(href='') Logged in as #{user.username}
+          a#user-anchor(href='/user/#{user.username}') Logged in as #{user.username}
         li
           a#logout-anchor(href="/logout") Logout
