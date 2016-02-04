@@ -11,8 +11,8 @@ var LocalStrategy = require('passport-local').Strategy;
 
 // set up routes
 var main = require('./routes/main');
-var api = require('./routes/api')
-var users = require('./routes/user')
+var api = require('./routes/api');
+var users = require('./routes/user');
 
 var app = express();
 
