@@ -2,5 +2,23 @@ extends layout
 
 block content
   include navbar.jade
-  include user.html
-  include footer.html
+
+  html
+  body
+    section#user.bg-chs-purple
+      .container
+        .row
+          .col-md-8.col-md-offset-2.text-center
+            h2#user-header.section-heading  
+            hr.light
+            p 
+        .row.dashboard
+    
+
+    script.
+      user="#{user}";
+    include ../public/js/controllers/user.js
+      
+
+
+    include footer.html

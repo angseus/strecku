@@ -3,6 +3,7 @@ var passport = require('passport');
 var Account = require('../models/account');
 var router = express.Router();
 var db = require('../db');
+var request = require("request")
 
 /* GET standard page */
 router.get('/', isLoggedIn, function (req, res) {
@@ -14,14 +15,18 @@ router.get('/:id', isLoggedIn, function (req, res) {
     db.query('SELECT id FROM users WHERE username = "' + req.params.id + '"', function(err, rows, fields) {
         if (err) throw err;
         if (!rows[0]){
-            console.log('No such user');
-            res.send('No such user'); // CHANGE TO JSON
+            console.log('No user with such a nick');
+            res.json({status:'error', message:'No user with such a nick'});
         }
         else{
-            console.log(rows[0].id);
-            res.render('user', ({id: rows[0].id}, {user: req.user}));
+            res.render('user', {user: req.user}); // send it to render function
         }
     });
+});
+
+
+router.get('/:id', function(req, res){
+    res.render('user', ({userdata: rows[0], user: req.user}));
 });
 
 // route middleware to make sure a user is logged in
